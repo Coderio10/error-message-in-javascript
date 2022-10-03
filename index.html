@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./index.css">
+    <title>Document</title>
+</head>
+<body>
+    <header class="header">
+        <h1>Error message in javascript</h1>
+    </header>
+    <main class="content">
+        <form name="form" action="" method="post" onsubmit="return validateForm()">
+            <div class="name">
+                <div class="row">
+                    <input type="text" name="first"   placeholder="First name" >
+                    <div class="error" id="fnerror"></div>
+                </div>
+                <div class="row">
+                    <input type="text" name="last" placeholder="last name">
+                    <div class="error" id="lnerror"></div>
+                </div>
+            </div>
+            <div class="row">
+                <input type="email" name="email" placeholder="email">
+                <div class="error" id="emerror"></div>
+            </div>
+            <div>
+                <input type="submit" id="submit" value="Submit">
+            </div>
+        </form>
+    </main>
+    <footer class="footer">
+    </footer>
+</body>
+<script>
+    //defining the function to display error message
+    function printError(elemId, hintMsg){
+        document.getElementById(elemId).innerHTML = hintMsg;
+    }
+    //Defining a function to validate form
+    function validateForm() {
+        // Retrieving the values of form elements
+        var first   = document.form.first.value;
+        var last    = document.form.last.value;
+        var email   = document.form.email.value;
+        // Defining error variables with a default value
+        var fnerror = lnerror = emerror = true;
+        //validate first name
+        if (first == "") {
+            printError("fnerror", "Enter your first name");
+        }else{
+            var regex = /^[a-zA-Z\s]+$/;
+            if (regex.test(first) === false) {
+                printError("fnerror", "Enter a valid name");             
+            }else{
+                printError("fnerror", "");
+                fnerror = false;
+            }
+        }
+        //validate last name
+        if(last == "") {
+            printError("lnerror", "Enter your last name");
+        }else{
+            var regex = /^[a-zA-Z\s]+$/;
+            if (regex.test(last) === false) {
+                printError("lnerror", "Enter a valid name");             
+            }else{
+                printError("lnerror", "");
+                fnerror = false;
+            }
+        }
+        //validate email address
+        if (email == "") {
+        printError("emerror", "Enter your email address");
+        }else{
+            // Regular expression for basic email validation
+            var regex = /^\S+@\S+\.\S+$/;
+            if (regex.test(email) === false) {
+                printError("emerror", "Enter a valid email address");             
+            }else{
+                printError("emerror", "");
+                emerror = false;
+            }
+        }
+        // Prevent the form from being submitted if there are any errors
+        if((fnerror || lnerror || emerror) == true){   
+            return false; 
+        }else{
+            //creating a string from input data to preview
+            var dataPreview = "You've entered the following details: \n" +
+                            "Full Name: " + first +  "\n" +
+                            "Last name: " + last + "\n" +
+                            "Email Address: " + email + "\n";
+            // Display input data in a dialog box before submitting the form
+            alert(dataPreview);
+        }
+    };
+</script>
+</html>
